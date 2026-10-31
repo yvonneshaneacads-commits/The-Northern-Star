@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Northern Star: How to Use the Dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:dark;--ink:#dfe8ff;--mute:#9fb0dd;--glow:#9dbcff;--card:rgba(24,38,86,.55);--line:rgba(157,188,255,.28);
+--hand:"Fredoka","Gaegu","Comic Sans MS",system-ui,sans-serif;--body:"Nunito","Quicksand",system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:16.5px/1.65 var(--body);background:linear-gradient(#0b1030 0,#16275e 40%,#1d4a78 75%,#2a4a8c 100%) fixed;min-height:100vh}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+#stars i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 6px #cfdcff;animation:tw 3s infinite ease-in-out,drift 30s infinite alternate ease-in-out}@keyframes drift{to{translate:var(--dx) var(--dy)}}#stars .sh{width:90px;height:2px;background:linear-gradient(90deg,#fff,transparent);box-shadow:none;opacity:0;rotate:-32deg;animation:shoot 1.3s ease-out forwards}@keyframes shoot{0%{opacity:1;translate:0 0}100%{opacity:0;translate:-260px 160px}}
+@keyframes tw{50%{opacity:.15}}
+@media (prefers-reduced-motion:reduce){#stars i{animation:none}html{scroll-behavior:auto}}
+header{position:relative;z-index:1;min-height:560px;max-width:1000px;margin:0 auto;padding:60px 22px 0;overflow:hidden}
+.title small{display:block;font-size:2rem;letter-spacing:.2em;color:var(--glow)}
+.title h1{font:700 clamp(3.5rem,13vw,6.5rem)/1 var(--hand);margin:0;letter-spacing:.04em;color:#cfdcff;text-shadow:0 0 24px rgba(120,160,255,.6)}
+.sp{color:#cfdcff;font-size:2.2rem;display:inline-block;animation:tw 4s infinite}
+nav a{display:block;color:var(--ink);text-decoration:none;font-size:1.4rem;font-style:italic;padding:2px 0}
+nav a:hover{color:#fff;text-shadow:0 0 10px var(--glow)}
+nav a::before{content:"- "}nav a::after{content:" -"}
+.tree{position:absolute;right:-20px;bottom:30px;width:min(52%,420px);opacity:.95}
+.const{position:absolute;left:38%;top:70px;width:200px;opacity:.7}
+.grass{position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(#5b78c6,#3b4f96)}
+main{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:10px 18px 60px;background:linear-gradient(#3b4f96,rgba(59,79,150,0) 120px)}
+.promo{padding:26px 0;text-align:center}
+.promo h2{font-size:1.9rem;margin:0 0 8px;color:#fff}
+.promo p{margin:8px auto;max-width:640px}
+.promo ul{list-style:none;padding:0;max-width:520px;margin:12px auto;text-align:left}
+h2.part{font-size:2.1rem;margin:50px 0 4px;color:#fff;text-shadow:0 0 14px rgba(120,160,255,.5)}
+.lead{color:var(--mute);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0;backdrop-filter:blur(4px)}
+.card h3{margin:0 0 6px;font-size:1.5rem;color:#fff}
+.body{white-space:pre-wrap}
+[contenteditable]{outline:none;border-radius:6px}
+[contenteditable]:focus{background:rgba(157,188,255,.14)}
+.slot{margin-top:12px;border:2px dashed var(--line);border-radius:12px;min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;color:var(--mute);overflow:hidden;padding:8px}
+.slot:hover,.slot:focus{border-color:var(--glow)}
+.slot img{max-width:100%;border-radius:8px;display:block}
+button{font:700 15px var(--hand);border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--ink);border-radius:10px;padding:4px 12px;cursor:pointer;margin:6px 6px 0 0}
+button:hover{border-color:var(--glow)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+td,th{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{color:#fff}
+.row{display:flex;gap:10px;margin:12px 0;align-items:flex-end}
+.row.fox{flex-direction:row-reverse}
+.av{font-size:2.2rem;flex:none}
+.bub{max-width:80%;padding:10px 14px;border-radius:18px;border:1px solid var(--line)}
+.owl .bub{background:rgba(120,100,200,.4);border-bottom-left-radius:4px}
+.fox .bub{background:rgba(220,130,70,.35);border-bottom-right-radius:4px}
+.who{font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.tools{display:none}.row:hover .tools,.row:focus-within .tools{display:block}
+.end{text-align:center;margin-top:50px}
+.end b{font-size:1.4rem;color:#fff}
+#msg{color:#ffd9a8;min-height:20px;text-align:center}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:30;background:linear-gradient(90deg,#9dbcff,#ffd9a8);box-shadow:0 0 8px #9dbcff}
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;justify-content:center;overflow-x:auto;padding:8px 12px;background:rgba(15,25,70,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.topnav a{display:inline-block;flex:none;font-style:normal;font-size:1.15rem;padding:3px 14px;border-radius:999px;color:var(--mute);border:1px solid transparent;transition:.25s}
+.topnav a::before,.topnav a::after{content:none}
+.topnav a:hover{color:#fff}
+.topnav a.on{color:#fff;border-color:var(--glow);background:rgba(157,188,255,.16);box-shadow:0 0 12px rgba(157,188,255,.4)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+#sections{counter-reset:c}
+.card h3::before{counter-increment:c;content:counter(c);display:inline-block;width:30px;height:30px;line-height:30px;text-align:center;border-radius:50%;margin-right:10px;font-size:1.1rem;background:rgba(157,188,255,.2);border:1px solid var(--glow);box-shadow:0 0 10px rgba(157,188,255,.4)}
+.card:hover{border-color:var(--glow);box-shadow:0 0 22px rgba(120,160,255,.25)}
+.tree{animation:sway 7s ease-in-out infinite;transform-origin:50% 95%}
+@keyframes sway{50%{transform:rotate(1.6deg)}}
+.title h1{animation:glow 4s ease-in-out infinite alternate}
+@keyframes glow{to{text-shadow:0 0 40px rgba(150,185,255,.95)}}
+header .title,header nav{animation:up 1s both}header nav{animation-delay:.3s}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.sp{animation:tw 4s infinite,spin 12s linear infinite}@keyframes spin{to{rotate:360deg}}
+.const path{stroke-dasharray:300;animation:draw 6s ease-in-out infinite alternate}
+@keyframes draw{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+#fx{position:absolute;inset:0;pointer-events:none}
+#fx i{position:absolute}
+#fx .ff{width:5px;height:5px;border-radius:50%;background:#ffeaa0;box-shadow:0 0 10px 3px rgba(255,234,160,.7);animation:fly 9s ease-in-out infinite alternate,tw 2.5s infinite}
+@keyframes fly{to{translate:var(--dx) var(--dy)}}
+#fx .lf{width:8px;height:5px;border-radius:50% 0;background:#6f95e6;animation:fall 8s linear infinite}
+@keyframes fall{from{opacity:1;translate:0 0;rotate:0deg}to{opacity:0;translate:-120px 380px;rotate:540deg}}
+.av{animation:bob 3.5s ease-in-out infinite}.fox .av{animation-delay:-1.7s}
+@keyframes bob{50%{translate:0 -5px}}
+.av svg{width:70px;height:70px;display:block;filter:drop-shadow(0 0 8px rgba(157,188,255,.55))}
+.owl .eyes{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.fox .tail{transform-box:fill-box;transform-origin:0 100%;animation:wag 1.8s ease-in-out infinite}
+@keyframes wag{50%{transform:rotate(14deg)}}
+#top{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;padding:0;opacity:0;pointer-events:none;transition:opacity .3s}#top.show{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+h2,h3,.title,button,.who,header nav a,.topnav a{font-family:var(--hand)}
+header nav a{font-style:normal;font-weight:500;font-size:1.2rem}
+.title small{font-weight:500;font-size:1.5rem}
+.topnav a{font-size:1rem;font-weight:500}
+.card h3{font-weight:600;font-size:1.3rem}
+h2.part{font-weight:600;font-size:1.9rem}
+.promo h2{font-weight:600;font-size:1.6rem}
+button{font-weight:500;font-size:14px}
+.body{font-size:1.02rem}
+#music{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;align-items:center;gap:8px;padding:4px 10px 4px 6px;border-radius:999px;background:rgba(15,25,70,.78);backdrop-filter:blur(8px);border:1px solid var(--line)}
+#music button{margin:0}
+#vol{width:74px;accent-color:#9dbcff}
+.tools{display:none!important}
+.cta{display:inline-block;margin-top:16px;padding:8px 20px;border-radius:999px;background:rgba(157,188,255,.2);border:1px solid var(--glow);color:#fff;text-decoration:none;font:600 1.05rem var(--hand);box-shadow:0 0 16px rgba(157,188,255,.4);transition:.25s;position:relative;z-index:2}
+.cta:hover{transform:translateY(-2px);box-shadow:0 0 26px rgba(157,188,255,.8)}
+.topnav a.get{border-color:var(--glow);color:#fff}
+.star{width:34px;height:34px;padding:0;border-radius:50%;font-size:18px;line-height:32px;text-align:center;color:#dfe3ee;border-color:rgba(223,227,238,.55);text-shadow:0 0 8px rgba(223,227,238,.85)}
+.star:hover{color:#fff;box-shadow:0 0 14px rgba(223,227,238,.6)}
+.star{display:none}body.edit .star{display:inline-block}
+.slot{cursor:default}body.edit .slot{cursor:pointer}
+#export{display:none;position:fixed;right:16px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;margin:0;padding:8px 16px;border-radius:999px;background:rgba(15,25,70,.88);color:#dfe3ee;border-color:rgba(223,227,238,.55)}body.edit #export{display:block}
+.av svg{width:84px;height:84px;filter:drop-shadow(0 0 6px rgba(157,188,255,.4))}
+.fox .bow{transform-box:fill-box;transform-origin:center;animation:bowwig 3s ease-in-out infinite}
+@keyframes bowwig{50%{transform:rotate(-6deg)}}
+.credit{margin-top:26px;font:500 1.05rem var(--hand);letter-spacing:.08em;color:var(--glow)}
+@media (max-width:640px){.tree{opacity:.4;width:70%}.const{display:none}}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<header>
+<svg class="const" viewBox="0 0 200 130" fill="none" stroke="#9dbcff" stroke-width=".6"><path d="M20 40 L100 12 L150 105"/><g fill="#cfdcff" stroke="none"><circle cx="20" cy="40" r="4"/><circle cx="100" cy="12" r="5"/><circle cx="150" cy="105" r="4"/></g></svg>
+<div class="title"><span class="sp">✦</span><small>the northern</small><h1>STAR</h1><small style="font-size:1.3rem;letter-spacing:.1em">a guide to using the dashboard</small></div>
+<nav style="margin-top:22px"><a href="#start">start</a><a href="#part1">navigating the sky</a><a href="#part2">follow the starlight</a><a href="#part3">the little universe</a><a href="#story">my story</a></nav>
+<a class="cta" href="https://cord-sulfur-fdf.notion.site/The-Northern-Star-c1c32e17dab882fcb0a681ccd924fcb3?source=copy_link" target="_blank" rel="noopener">✦ Get the free Notion template ↗</a>
+<svg class="tree" viewBox="0 0 300 300"><g fill="#4d78d6"><circle cx="150" cy="90" r="70"/><circle cx="95" cy="120" r="45"/><circle cx="205" cy="115" r="48"/><circle cx="150" cy="50" r="40"/></g><g fill="#a9c4f5" opacity=".6"><circle cx="130" cy="70" r="28"/><circle cx="185" cy="100" r="22"/><circle cx="105" cy="115" r="16"/></g><path d="M148 290 L146 170 L110 135 M146 175 L190 130" stroke="#2b2230" stroke-width="9" fill="none" stroke-linecap="round"/><ellipse cx="148" cy="288" rx="40" ry="12" fill="#7d8aa8"/></svg>
+<div class="grass" id="grass"></div><div id="fx"></div>
+</header>
+<div id="bar"></div>
+<nav class="topnav" id="topnav"><a href="#start">✦ Start</a><a href="#part1">Navigating the Sky</a><a href="#part2">Follow the Starlight</a><a href="#part3">The Little Universe</a><a href="#ref">Quick Guide</a><a href="#story">My Story</a><a class="get" href="https://cord-sulfur-fdf.notion.site/The-Northern-Star-c1c32e17dab882fcb0a681ccd924fcb3?source=copy_link" target="_blank" rel="noopener">Get the Template ↗</a></nav>
+<button id="top" aria-label="Back to top">↑</button>
+<div id="music"><button id="mbtn" aria-pressed="false">♪ Play lullaby</button><input id="vol" type="range" min="0" max="100" value="40" aria-label="Volume"></div>
+<button id="export">★ Export page</button>
+<main>
+<div id="msg"></div>
+<section class="promo">
+<h2>✦ What if you didn’t need to have your whole life figured out? ✦</h2>
+<p>Somewhere between chasing milestones, meeting expectations, and trying to become the person we dream of being, we forget that we’re allowed to grow at our own pace. That thought inspired The Northern Star. ✧</p>
+<p>A little corner of Notion for fellow travelers who are still figuring things out. A space to pause, reflect, rediscover what matters, and take small steps toward a life that feels like their own.</p>
+<ul><li>☆ Guided reflections to understand yourself better</li><li>☆ A space to explore your values, expectations, and self-doubt</li><li>☆ Goal-setting tools to chart your own course</li><li>☆ Habit trackers and small steps to turn intentions into action</li><li>☆ Progress logs to celebrate the little things</li></ul>
+<p>And the best part? It’s free. ♡</p>
+<p class="lead">Click a dashed box, or focus it and paste, to add your own screenshot.</p>
+</section>
+<div id="sections"></div>
+
+<h2 class="part" id="ref">Which space should I use?</h2>
+<div class="card scroll"><table id="ref-t"></table></div>
+
+<h2 class="part" id="story">My Story: The Owl &amp; the Fox</h2>
+<p class="lead">The owl keeps things steady; the fox keeps asking.</p>
+<div id="talk"></div>
+
+
+<div class="end"><p>You do not need to become the brightest star in the sky. You only need to find your own Polaris. ✨</p><p><b>Find your direction. Follow your starlight. Grow at your own pace.</b></p><p><a class="cta" href="https://cord-sulfur-fdf.notion.site/The-Northern-Star-c1c32e17dab882fcb0a681ccd924fcb3?source=copy_link" target="_blank" rel="noopener">✦ Get the free Notion template ↗</a></p><p class="lead">The Northern Star Dashboard | A free Notion template, made with care.</p><p class="credit">Created by Yvonne Shane Lu ✦</p></div>
+</main>
+<script id="baked" type="application/json">{}</script>
+<script>
+const KEY='northern-star-v1';
+const owner=(async()=>{try{const u=await claude.use('user');return !!(u&&u.isOwner())}catch(e){return false}})();
+const D={sec:[
+{p:'start',ph:'Getting Started',t:'Set up your account',b:'☆ Open Settings.\n☆ Under Appearance, choose a high-contrast setting.\n☆ Choose the theme you prefer.\n☆ Duplicate your chosen theme, then delete the setup page.\n☆ Explore freely. There is no fixed sequence.'},
+{p:'part1',ph:'Part I: Navigating the Sky',lead:'Understand yourself, your values, your worth, the expectations around you, and your direction.',t:'The Compass: Values',b:'Discover, review, realign.\n☆ Step 1: Take the values test, record your scores, rank your priorities, and reflect on what each value means to you.\n☆ Step 2 (monthly): Review how your values shaped your choices, pick your Top 5, and decide what to keep, reprioritize, explore, or reconsider.\n☆ My Month in Moments: upload evidence of how you lived your values.\n☆ My Vision Board: collect images of how you want to live them next month.\nCreate a new entry each month to see how your compass changes.'},
+{t:'Seeing the Sky: Self-Worth',b:'Explore who you are beyond grades, achievements, income, or other people’s expectations.\n☆ Answer the prompts in bullet points or a numbered list.\n☆ You do not have to finish all five in one sitting.\n☆ Delete any element you do not need.'},
+{t:'The Constellations: Self-Doubt',b:'Examine the thoughts behind feeling inadequate and find one small step.\n☆ Be honest without judging your answers.\n☆ Separate what happened from what you fear might happen.\n☆ Look for evidence: small efforts, lessons, progress.\n☆ Answer one question at a time and come back later.'},
+{t:'Clearing the Clouds: Expectations',b:'Notice which expectations come from you, and which come from family, friends, society, or social media. You do not have to reject them all. Keep the ones that fit the life you want.\nThrough the Clouds: Your Quick Log helps you:\n☆ Identify what is weighing on you.\n☆ Consider where it comes from.\n☆ Check whether it aligns with your values.\n☆ Decide what you can do next.'},
+{t:'Quick Log: When the Sky Feels Heavy',b:'Let your feelings out without a full reflection.\n☆ Record what happened.\n☆ Explore why it affected you.\n☆ Write a kinder, more balanced response.\nEach space has a reusable template. Create a new entry whenever you need one. A few honest sentences are enough.'},
+{t:'Your Polaris: Goals and Ambitions',b:'A Space for All Your Ambitions\n☆ Explore your 20-, 10-, 5-, and 3-year visions: who you want to become, what you want, why it matters, and how.\n☆ Set aims, define projects, pick durations, update statuses, and assign target dates.\n☆ Focus on projects that move you toward your three-year vision.\n☆ Build vision boards for each horizon using your Life Wheel categories, and collect milestone images and stories.'},
+{p:'part2',ph:'Part II: Follow the Starlight',lead:'Turn long-term aspirations into projects, milestones, and tasks.',t:'Celestial Blueprint: Dreams and Milestones',b:'☆ In 90 Days From 3 Years: pick 1 to 3 high-impact goals. Click + New, open the page, and answer What, Why, When, Where, and How.\n☆ The Milestones: add checkpoints linked to their parent goal or project.\n☆ Tasks for the Milestones: list action items, tag each with its Project/Aim and Milestone, then check them off to move the progress bar.\n☆ A Space for Your Vision and A Space for Your Milestones hold your vision boards and progress stories.'},
+{t:'A Daily Compass / Lunar Cycles: Habits',b:'Focus on consistency, not perfection.\n☆ Today’s Habits: complete your checklist and watch your percentage.\n☆ Habit Analytics: see your average completion rate.\n☆ Monthly Overview: revisit past entries and the monthly chart.\n☆ Customize: daily entries generate automatically. To add, remove, or rename habits, follow the tutorial.'},
+{p:'part3',ph:'Part III: The Little Universe',lead:'Daily rhythms, quick logs, and kindred souls.',t:'Weekly Starlight: Weekly Orbit',b:'☆ View tasks in the calendar or by day, Monday to Sunday, and check them off.\nRecurring tasks:\n☆ Click the dropdown next to the blue New button, then + New template.\n☆ Title it and set properties like Priority and Day.\n☆ Click the ... menu on the template and set Repeat to Every week.\nWeekly reflection:\n☆ In Calendar View, choose the Weekly Reflection template, review your tasks and momentum, answer the prompts, and carry takeaways forward.'},
+{t:'Through the Clouds: Quick Whispers',b:'Your reusable quick-log spaces live here. Write something down without a full reflection, and return to Self-Worth, Self-Doubt, or Expectations whenever it helps.'},
+{t:'Constellations of Connection',b:'Find mentors, study companions, faith communities, and supportive peers.\n☆ Kindred Stars: keep the details of people you can reach out to for support.'}],
+ref:[['Identify what matters most','The Compass: Values'],['Reconnect with who you are beyond achievements','Seeing the Sky: Self-Worth'],['Examine thoughts of inadequacy','The Constellations: Self-Doubt'],['Understand outside pressure','Clearing the Clouds: Expectations'],['Record a hard feeling quickly','Quick Log / Through the Clouds'],['Clarify your future','Your Polaris'],['Turn a 3-year vision into action','In 90 Days From 3 Years'],['Track habits','Lunar Cycles / A Daily Compass'],['Plan and reflect on your week','Weekly Starlight'],['Find support','Constellations of Connection / Kindred Stars']],
+talk:[{w:'fox',x:'So why did you make The Northern Star?'},{w:'owl',x:'Because I kept thinking I had to have my whole life figured out. I wanted a place to pause.'},{w:'fox',x:'But aren’t plans supposed to make you faster?'},{w:'owl',x:'Growth does not have to be loud, fast, or perfectly planned. Sometimes it begins with one small step.'},{w:'fox',x:'And if I get lost?'},{w:'owl',x:'You do not need to be the brightest star. Just find your Polaris, and follow your starlight.'}]};
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+const baked=(()=>{try{return JSON.parse(document.getElementById('baked').textContent||'{}')}catch(e){return{}}})();
+const edit=(()=>{try{if(location.hash==='#edit')localStorage.setItem('ns-edit','1');return localStorage.getItem('ns-edit')==='1'}catch(e){return location.hash==='#edit'}})();
+let EDIT=edit;if(edit)document.body.classList.add('edit');
+const old=S&&S.sec?S.sec:[];S=JSON.parse(JSON.stringify(D));S.sec.forEach((s,i)=>{s.img=(edit&&old[i]&&typeof old[i].img==='string')?old[i].img:(baked[i]||'')});
+const $=s=>document.querySelector(s);
+function msg(t){$('#msg').textContent=t;setTimeout(()=>$('#msg').textContent='',4000)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){msg('Storage is full. Try fewer or smaller screenshots.')}}
+function mk(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function ed(){}
+function shrink(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.72))};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(f)})}
+function renderSec(){const box=$('#sections');box.innerHTML='';
+S.sec.forEach(s=>{
+if(s.ph){const h=mk('h2','part',s.ph);h.id=s.p;box.append(h);if(s.lead)box.append(mk('p','lead',s.lead))}
+const c=mk('div','card rv');const h=mk('h3',null,s.t);ed(h,v=>s.t=v);c.append(h);
+const b=mk('div','body',s.b);ed(b,v=>s.b=v);c.append(b);
+const slot=mk('div','slot');slot.tabIndex=0;
+const draw=()=>{slot.innerHTML='';if(s.img){const im=new Image();im.src=s.img;im.alt='Screenshot: '+s.t;slot.append(im)}else slot.textContent=EDIT?'✦ Click to add a screenshot, or focus here and paste':'✦ Screenshot coming soon'};draw();
+const inp=mk('input');inp.type='file';inp.accept='image/*';inp.hidden=true;
+const add=async f=>{if(!f||!EDIT)return;try{s.img=await shrink(f);draw();save()}catch(e){msg('Could not read that image.')}};
+inp.onchange=()=>add(inp.files[0]);slot.onclick=()=>{if(EDIT)inp.click()};
+slot.addEventListener('paste',e=>{const f=[...e.clipboardData.files].find(x=>x.type.startsWith('image/'));if(f){e.preventDefault();add(f)}});
+slot.addEventListener('dragover',e=>e.preventDefault());slot.addEventListener('drop',e=>{e.preventDefault();add(e.dataTransfer.files[0])});
+c.append(slot,inp);
+const rb=mk('button','star','★');rb.title='Remove screenshot';rb.setAttribute('aria-label','Remove screenshot');rb.onclick=()=>{s.img='';draw();save()};c.append(rb);
+box.append(c)})}
+function renderRef(){const t=$('#ref-t');t.innerHTML='<tr><th>When you want to…</th><th>Go to…</th></tr>';S.ref.forEach(r=>{const tr=mk('tr');r.forEach((v,j)=>{const td=mk('td',null,v);ed(td,x=>r[j]=x);tr.append(td)});t.append(tr)})}
+function renderTalk(){const box=$('#talk');box.innerHTML='';
+S.talk.forEach((l,i)=>{const r=mk('div','row rv '+l.w);const av=mk('div','av');av.innerHTML=ART[l.w];r.append(av);
+const b=mk('div','bub');b.append(mk('div','who',l.w==='owl'?'Owl':'Fox'));
+const t=mk('div',null,l.x);ed(t,v=>l.x=v);b.append(t);
+const tl=mk('div','tools'),fl=mk('button',null,'Switch speaker'),dl=mk('button',null,'Delete');
+fl.onclick=()=>{l.w=l.w==='owl'?'fox':'owl';save();renderTalk()};dl.onclick=()=>{S.talk.splice(i,1);save();renderTalk()};
+tl.append(fl,dl);b.append(tl);r.append(b);box.append(r)});reveal()}
+
+
+const st=$('#stars'),R=Math.random;
+for(let i=0;i<80;i++){const e=document.createElement('i'),z=1.5+R()*2.5;e.style.cssText=`left:${R()*100}%;top:${R()*75}%;width:${z}px;height:${z}px;--dx:${R()*80-40}px;--dy:${R()*50-25}px;animation-delay:${-R()*3}s,${-R()*30}s;animation-duration:${2+R()*3}s,${20+R()*25}s`;st.append(e)}
+setInterval(()=>{const e=document.createElement('i');e.className='sh';e.style.cssText=`left:${40+R()*55}%;top:${R()*30}%`;st.append(e);setTimeout(()=>e.remove(),1500)},4500);
+const ART={owl:`<svg viewBox="0 0 64 64"><g stroke="#cfdcff" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M14 18 20 8 28 15Q32 13 36 15L44 8 50 18Q55 40 46 54Q32 62 18 54Q9 40 14 18Z" fill="#5a4fb0"/><ellipse cx="32" cy="46" rx="11" ry="11" fill="#8f86d8" stroke="none"/><path d="M26 44q3 3 6 0M32 50q3 3 6 0M26 50q3 3 6 0" fill="none" stroke="#5a4fb0"/><g class="eyes"><circle cx="24" cy="26" r="8" fill="#e9eeff"/><circle cx="40" cy="26" r="8" fill="#e9eeff"/><circle cx="24" cy="27" r="3.5" fill="#1a1f4d" stroke="none"/><circle cx="40" cy="27" r="3.5" fill="#1a1f4d" stroke="none"/></g><path d="M29 32 32 38 35 32Z" fill="#ffc46b"/></g></svg>`,
+fox:`<svg viewBox="0 0 64 64"><g stroke="#ffe3c4" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path class="tail" d="M46 52Q64 52 60 30Q54 42 44 42Z" fill="#c96a2c"/><path d="M11 8 24 22Q32 20 40 22L53 8Q56 30 46 44Q32 57 18 44Q8 30 11 8Z" fill="#e8833f"/><path d="M15 15 21 22 23 17ZM49 15 43 22 41 17Z" fill="#5a2f3a" stroke="none"/><path d="M16 36Q32 58 48 36Q38 46 32 46Q26 46 16 36Z" fill="#fff1e0" stroke="none"/><circle cx="24" cy="31" r="2.6" fill="#241631" stroke="none"/><circle cx="40" cy="31" r="2.6" fill="#241631" stroke="none"/><ellipse cx="32" cy="43" rx="3" ry="2.2" fill="#241631" stroke="none"/></g></svg>`};
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.08});
+function reveal(){document.querySelectorAll('.rv:not(.in)').forEach(e=>io.observe(e))}
+let p=['0% 100%'];for(let x=0;x<=100;x+=2){p.push(x+'% '+(x%4?55:15+Math.random()*25)+'%')}p.push('100% 100%');$('#grass').style.clipPath='polygon('+p.join(',')+')';
+ART.owl=`<svg viewBox="0 0 70 90"><path d="M13 38 11 14 31 27ZM57 38 59 14 39 27Z" fill="#d6dcf5"/><path d="M15 30 14 20 24 26ZM55 30 56 20 46 26Z" fill="#9ea6c8"/><ellipse cx="35" cy="58" rx="24" ry="26" fill="#d6dcf5"/><g class="eyes"><circle cx="24" cy="49" r="9.5" fill="#1a2040"/><circle cx="24" cy="49" r="6" fill="#d6dcf5"/><circle cx="24" cy="49" r="3.4" fill="#1a2040"/><circle cx="46" cy="49" r="9.5" fill="#1a2040"/><circle cx="46" cy="49" r="6" fill="#d6dcf5"/><circle cx="46" cy="49" r="3.4" fill="#1a2040"/></g><path d="M31 57H39L35 65Z" fill="#1a2040"/><path d="M21 75q3-4 6 0t6 0t6 0t6 0" fill="none" stroke="#1a2040" stroke-width="2" stroke-linecap="round"/><rect x="3" y="84" width="64" height="3" rx="1.5" fill="#d6dcf5"/></svg>`;
+ART.fox=`<svg viewBox="-10 0 120 118"><path d="M6 8 34 26Q50 18 66 26L94 4V46L50 90 6 48Z" fill="#cfd6f3"/><path d="M14 22 30 31 14 42ZM86 16 72 30 88 38Z" fill="#9ea6c8"/><path d="M32 56Q50 66 68 56L50 88Z" fill="#3a4263"/><path d="M26 46Q34 54 42 46M58 46Q66 54 74 46" fill="none" stroke="#1a2040" stroke-width="3" stroke-linecap="round"/><path d="M-2 40 8 42M-2 50 8 50M92 42 102 40M92 50 102 52" stroke="#8b94b8" stroke-width="1.6" stroke-linecap="round"/><g class="bow" fill="none" stroke="#cfd6f3" stroke-width="2.6" stroke-linecap="round"><path d="M50 99C38 89 24 97 32 103 38 108 46 103 50 99ZM50 99C62 89 76 97 68 103 62 108 54 103 50 99Z"/><path d="M47 103 45 111M50 103V112M53 103 55 111" stroke-width="2"/><circle cx="50" cy="99" r="3" fill="#cfd6f3"/></g></svg>`;
+renderSec();renderRef();renderTalk();
+document.querySelectorAll('.promo,.end,.card.scroll').forEach(e=>e.classList.add('rv'));reveal();
+const fx=$('#fx');
+for(let i=0;i<16;i++){const e=document.createElement('i');e.className='ff';e.style.cssText=`left:${R()*96}%;top:${50+R()*40}%;--dx:${R()*120-60}px;--dy:${R()*80-40}px;animation-duration:${6+R()*8}s,${2+R()*2}s;animation-delay:${-R()*8}s,${-R()*3}s`;fx.append(e)}
+for(let i=0;i<8;i++){const e=document.createElement('i');e.className='lf';e.style.cssText=`left:${62+R()*22}%;top:${22+R()*20}%;animation-delay:${-R()*8}s;animation-duration:${6+R()*5}s`;fx.append(e)}
+const links=[...document.querySelectorAll('.topnav a')],bar=$('#bar'),tb=$('#top');
+const spy=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+x.target.id))}),{rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('h2.part').forEach(h=>spy.observe(h));
+addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';tb.classList.toggle('show',scrollY>500)},{passive:true});
+tb.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+owner.then(o=>{if(o&&!EDIT){EDIT=true;document.body.classList.add('edit');renderSec();reveal()}});
+$('#export').onclick=async()=>{try{const r=await fetch(location.href.split('#')[0],{cache:'no-store'});if(!r.ok)throw 0;let t=await r.text();const m={};S.sec.forEach((s,i)=>{if(s.img)m[i]=s.img});const j=JSON.stringify(m).replace(/</g,'\\u003c');t=t.replace(/(<script id="baked" type="application\/json">)[\s\S]*?(<\/script>)/,(a,b,c)=>b+j+c);const u=URL.createObjectURL(new Blob([t],{type:'text/html'})),a=document.createElement('a');a.href=u;a.download='index.html';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);msg('Downloaded index.html with your screenshots built in. Replace the file in your repo with it.')}catch(e){msg('Export works on your live site. Open it with #edit at the end of the link.')}};
+let ac,master,dl,playing=false,timer,ci=0,nextPad=0,nextNote=0;
+const CH=[[130.81,196,329.63],[110,164.81,261.63],[87.31,130.81,220],[98,146.83,246.94]],P=[523.25,587.33,659.25,783.99,880];
+function note(f,t,d,v){const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);g.connect(dl);o.start(t);o.stop(t+d+.1)}
+function pad(fs,t,d){fs.forEach(f=>{const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.06,t+2.5);g.gain.linearRampToValueAtTime(0,t+d+1.5);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+2)})}
+function tick(){const n=ac.currentTime;while(nextPad<n+1.5){pad(CH[ci++%4],nextPad,8);nextPad+=8}while(nextNote<n+1.5){note(P[Math.floor(R()*P.length)]*(R()<.25?.5:1),nextNote,2.2,.11);nextNote+=.7+R()*1.1}}
+const mb=$('#mbtn'),vol=$('#vol');
+mb.onclick=async()=>{
+if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return;ac=new A();master=ac.createGain();master.gain.value=vol.value/100*.8;master.connect(ac.destination);dl=ac.createDelay(1);dl.delayTime.value=.42;const fb=ac.createGain(),wet=ac.createGain();fb.gain.value=.38;wet.gain.value=.5;dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(master)}
+if(!playing){await ac.resume();nextPad=nextNote=ac.currentTime+.1;timer=setInterval(tick,400);tick();playing=true}else{clearInterval(timer);ac.suspend();playing=false}
+mb.textContent=playing?'♪ Pause lullaby':'♪ Play lullaby';mb.setAttribute('aria-pressed',playing)};
+vol.oninput=()=>{if(master)master.gain.value=vol.value/100*.8};
+</script>
+</body>
+</html>
